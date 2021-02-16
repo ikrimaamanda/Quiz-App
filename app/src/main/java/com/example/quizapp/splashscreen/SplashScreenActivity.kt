@@ -16,11 +16,6 @@ class SplashScreenActivity : BaseActivity<ActivitySplashScreenBinding>() {
         setLayout = R.layout.activity_splash_screen
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-            WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-        )
-
         Handler(mainLooper).postDelayed(
             {
                 startActivity(Intent(this, WelcomePageActivity::class.java))
