@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.quizapp.R
 import com.example.quizapp.base.BaseActivity
 import com.example.quizapp.databinding.ActivityWelcomePageBinding
+import com.example.quizapp.main.CategoryQuestionActivity
 import com.example.quizapp.main.HomeActivity
 
 class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
@@ -19,7 +20,7 @@ class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
 
     private fun onClick() {
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, CategoryQuestionActivity::class.java))
         }
     }
 }
