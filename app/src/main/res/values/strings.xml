@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">QuizApp</string>
+    <string name="login">Login</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="let_s_exercise_your_brain">Let\'s Exercise Your Brain</string>
+    <string name="welcome">Welcome!</string>
 </resources>
