@@ -14,7 +14,7 @@
             android:layout_marginTop="50dp"
             android:fontFamily="@font/poppins_extrabold"
             android:text="@string/welcome"
-            android:textColor="@color/black_soft"
+            android:textColor="@color/black"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
