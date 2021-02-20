@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApp">
-        <activity android:name=".main.CategoryQuestionActivity"></activity>
+        <activity android:name=".main.questions.MainContentQuestionActivity"></activity>
+        <activity android:name=".main.category.CategoryQuestionActivity" />
         <activity android:name=".welcomepage.WelcomePageActivity" />
-        <activity android:name=".main.HomeActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".splashscreen.SplashScreenActivity">
             <intent-filter>

@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
-        tools:context=".main.CategoryQuestionActivity">
+        tools:context=".main.category.CategoryQuestionActivity">
 
         <TextView
             android:id="@+id/tv_title"
@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_questions"
+            android:id="@+id/rv_category"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="50dp"

@@ -1,13 +1,12 @@
 package com.example.quizapp.welcomepage
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.quizapp.R
 import com.example.quizapp.base.BaseActivity
 import com.example.quizapp.databinding.ActivityWelcomePageBinding
-import com.example.quizapp.main.CategoryQuestionActivity
-import com.example.quizapp.main.HomeActivity
+import com.example.quizapp.main.category.CategoryQuestionActivity
+import com.example.quizapp.main.questions.MainContentQuestionActivity
 
 class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
 
@@ -20,7 +19,7 @@ class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
 
     private fun onClick() {
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(this, CategoryQuestionActivity::class.java))
+            startActivity(Intent(this, MainContentQuestionActivity::class.java))
         }
     }
 }

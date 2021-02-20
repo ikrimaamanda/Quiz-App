@@ -4,11 +4,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.quizapp.main.questions.No1Fragment
+import com.example.quizapp.main.questions.No2Fragment
 
 class TabPagerAdapter(fragment : FragmentManager) : FragmentStatePagerAdapter(fragment, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val fragment = arrayOf(
-        No1Fragment()
+        No1Fragment(),
+        No2Fragment()
     )
 
     override fun getCount(): Int = fragment.size
