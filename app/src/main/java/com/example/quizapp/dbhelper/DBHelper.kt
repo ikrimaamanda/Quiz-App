@@ -14,7 +14,7 @@ class DBHelper(context: Context) : SQLiteAssetHelper(context, "EurekaQuiz2021.db
 
         val cursor: Cursor = db.rawQuery("SELECT * FROM Category;", null)
 
-        var categories: MutableList<Category> = ArrayList()
+        val categories: MutableList<Category> = ArrayList()
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast) {

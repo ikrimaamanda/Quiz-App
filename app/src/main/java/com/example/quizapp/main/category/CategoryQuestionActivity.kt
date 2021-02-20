@@ -1,6 +1,5 @@
 package com.example.quizapp.main.category
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
