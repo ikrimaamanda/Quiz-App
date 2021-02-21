@@ -2,7 +2,7 @@ package com.example.quizapp.main.category
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.quizapp.R
 import com.example.quizapp.base.BaseActivity
 import com.example.quizapp.databinding.ActivityCategoryQuestionBinding
@@ -25,7 +25,7 @@ class CategoryQuestionActivity : BaseActivity<ActivityCategoryQuestionBinding>()
         )
 
         binding.rvCategory.apply {
-            binding.rvCategory.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            binding.rvCategory.layoutManager = GridLayoutManager(this@CategoryQuestionActivity, 3)
             rvAdapter.onItemCategoryClicked(object : CategoryQuestionAdapter.OnItemCategoryClickCallBack {
                 override fun onItemCategoryClicked(categoryModel: Category) {
                     Toast.makeText(this@CategoryQuestionActivity, "${categoryModel.name} clicked", Toast.LENGTH_SHORT).show()
