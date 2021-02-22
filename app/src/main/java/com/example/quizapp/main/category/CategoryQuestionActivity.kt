@@ -32,7 +32,6 @@ class CategoryQuestionActivity : BaseActivity<ActivityCategoryQuestionBinding>()
             rvAdapter.onItemCategoryClicked(object : CategoryQuestionAdapter.OnItemCategoryClickCallBack {
                 override fun onItemCategoryClicked(categoryModel: Category) {
                     Common.selectedCategory = categoryModel
-                    Toast.makeText(this@CategoryQuestionActivity, "${categoryModel.name} clicked", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@CategoryQuestionActivity, MainContentQuestionActivity::class.java))
                 }
             })

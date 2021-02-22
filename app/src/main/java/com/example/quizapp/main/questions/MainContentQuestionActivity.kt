@@ -82,7 +82,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                     .title("Ooppss...")
                     .body("We don't have any question for ${Common.selectedCategory!!.name} category")
                     .position(AwesomeDialog.POSITIONS.CENTER)
-                    .icon(R.drawable.ic_congrts)
+                    .icon(R.drawable.ic_sad)
                     .onPositive("Go To Category of Questions") {
                         Log.d("TAG", "positive ")
                         intent<CategoryQuestionActivity>(this)
