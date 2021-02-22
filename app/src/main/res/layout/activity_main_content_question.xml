@@ -29,6 +29,79 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+            <TextView
+                android:id="@+id/tv_total_question"
+                android:text="Question \nX/5"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_score"
+                android:text="Score 100"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toTopOf="@id/tv_total_question"
+                app:layout_constraintBottom_toBottomOf="@id/tv_total_question"
+                app:layout_constraintStart_toEndOf="@id/tv_total_question"
+                />
+
+            <TextView
+                android:id="@+id/tv_true"
+                android:text="True 5"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toTopOf="@id/tv_total_question"
+                app:layout_constraintBottom_toBottomOf="@id/tv_total_question"
+                app:layout_constraintStart_toEndOf="@id/tv_score"
+                />
+
+            <TextView
+                android:id="@+id/tv_false"
+                android:text="False 5"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toTopOf="@id/tv_true"
+                app:layout_constraintStart_toEndOf="@id/tv_true"
+                />
+
+            <TextView
+                android:id="@+id/tv_timer"
+                android:text="00:30"
+                android:visibility="gone"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:padding="5dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toTopOf="@id/tv_total_question"
+                app:layout_constraintBottom_toBottomOf="@id/tv_total_question"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -49,6 +122,7 @@
                 app:tabIndicatorColor="@color/white"
                 app:tabBackground="@color/baby_blue"
                 app:tabIndicatorHeight="5dp"
+                app:tabMode="scrollable"
                 />
 
             <androidx.viewpager.widget.ViewPager

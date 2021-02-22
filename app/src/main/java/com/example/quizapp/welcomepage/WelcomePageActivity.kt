@@ -19,7 +19,7 @@ class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
 
     private fun onClick() {
         binding.btnLogin.setOnClickListener {
-            startActivity(Intent(this, MainContentQuestionActivity::class.java))
+            startActivity(Intent(this, CategoryQuestionActivity::class.java))
         }
     }
 }

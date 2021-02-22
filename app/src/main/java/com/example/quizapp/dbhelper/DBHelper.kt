@@ -47,7 +47,7 @@ class DBHelper(context: Context) : SQLiteAssetHelper(context, DB_NAME, null, DB_
         return categories
     }
 
-    fun getQuestionByCategory(context: Context, categoryId : Int) : List<Question> {
+    fun getQuestionByCategory(context: Context, categoryId : Int) : MutableList<Question> {
         getInstance(context)
         val db = instance!!.writableDatabase
 
