@@ -211,9 +211,15 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         countCorrectAnswer()
 
         binding.tvTotalQuestion.text = ("Question\n${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
-        binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
+        val score = Common.rightAnswerCount * (100/Common.questionList.size)
+        binding.tvScore.text = "Score ${(100 - score) + score}"
         binding.tvTrue.text = "True ${Common.rightAnswerCount}"
         binding.tvFalse.text = "Wrong ${Common.wrongAnswerCount}"
+
+        if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
+            questionFragment.showCorrectAnswer()
+            questionFragment.disableAnswer()
+        }
     }
 
     private fun checkQuestions() {
@@ -237,14 +243,14 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         binding.btnFinish.setOnClickListener {
             if (!isAnswerModeView) {
                 AwesomeDialog.build(this)
-                        .title("Finish?")
+                        .title("FINISH QUIZ")
                         .body("Are you sure to finish this quiz?")
                         .position(AwesomeDialog.POSITIONS.CENTER)
                         .onPositive("Go to Category") {
                             Log.d("TAG", "positive ")
-//                            finishQuiz()
-                            intent<CategoryQuestionActivity>(this)
-                            finish()
+                            finishQuiz()
+//                            intent<CategoryQuestionActivity>(this)
+//                            finish()
                         }
                         .onNegative("No") {
                             Log.d("TAG", "negative ")
