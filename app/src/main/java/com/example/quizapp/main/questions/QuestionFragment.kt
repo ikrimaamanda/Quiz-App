@@ -35,6 +35,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
         questionIndex = arguments!!.getInt("index", -1)
         question = Common.questionList[questionIndex]
+
         if (question != null) {
             if (question!!.isImageQuestion) {
                 Picasso.get()
@@ -62,33 +63,33 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
             binding.ckbAnswerA.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerA.toString())
+                    Common.selectedValue.add(binding.ckbAnswerA.text.toString())
                 } else {
-                    Common.selectedValue.remove(binding.ckbAnswerA.toString())
+                    Common.selectedValue.remove(binding.ckbAnswerA.text.toString())
                 }
             }
 
             binding.ckbAnswerB.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerB.toString())
+                    Common.selectedValue.add(binding.ckbAnswerB.text.toString())
                 } else {
-                    Common.selectedValue.remove(binding.ckbAnswerB.toString())
+                    Common.selectedValue.remove(binding.ckbAnswerB.text.toString())
                 }
             }
 
             binding.ckbAnswerC.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerC.toString())
+                    Common.selectedValue.add(binding.ckbAnswerC.text.toString())
                 } else {
-                    Common.selectedValue.remove(binding.ckbAnswerC.toString())
+                    Common.selectedValue.remove(binding.ckbAnswerC.text.toString())
                 }
             }
 
             binding.ckbAnswerD.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerD.toString())
+                    Common.selectedValue.add(binding.ckbAnswerD.text.toString())
                 } else {
-                    Common.selectedValue.remove(binding.ckbAnswerD.toString())
+                    Common.selectedValue.remove(binding.ckbAnswerD.text.toString())
                 }
             }
 
@@ -120,8 +121,6 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
             if (question != null) {
                 if (result.isNotEmpty()) {
-                    Log.d("result:", result.toString())
-                    Log.d("correctAnswer:", question!!.correctAnswer.toString())
                     if(result.toString() == question!!.correctAnswer) {
                         currentQuestion.type = Common.ANSWER_TYPE.RIGHT_ANSWER
                     } else {

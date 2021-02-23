@@ -94,7 +94,6 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                     }
 
                     if (Common.answerSheetList[position].type == Common.ANSWER_TYPE.NO_ANSWER) {
-                        // if want to show correct answer, just enable it
                         val questionState = questionFragment.selectedAnswer()
                         Common.answerSheetList[position] = questionState
                         answerAdapter.notifyDataSetChanged()
@@ -106,10 +105,10 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                         binding.tvTrue.text = "True ${Common.rightAnswerCount}"
                         binding.tvFalse.text = "Wrong ${Common.wrongAnswerCount}"
 
-//                        if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
-//                            questionFragment.showCorrectAnswer()
-//                            questionFragment.disableAnswer()
-//                        }
+                        if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
+                            questionFragment.showCorrectAnswer()
+                            questionFragment.disableAnswer()
+                        }
                     }
                 }
 
