@@ -15,6 +15,11 @@ object Common {
     var fragmentList : MutableList<QuestionFragment> = ArrayList()
     var selectedValue : MutableList<String> = ArrayList()
 
+    var timer = 0
+    var rightAnswerCount = 0
+    var wrongAnswerCount = 0
+    var noAnswerCount = 0
+    var dataQuestion = StringBuilder()
 
     enum class ANSWER_TYPE {
         NO_ANSWER,

@@ -10,7 +10,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:paddingTop="20dp"
             android:paddingHorizontal="20dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -22,8 +22,8 @@
                 android:id="@+id/tv_title"
                 android:text="Soal X"
                 android:textColor="@color/white"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="20sp"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="22sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/tv_total_question"
-                android:text="Question \nX/5"
+                android:text="Question \n0/X"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/tv_score"
-                android:text="Score 100"
+                android:text="Score 0"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/tv_true"
-                android:text="True 5"
+                android:text="True 0"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tv_false"
-                android:text="False 5"
+                android:text="False 0"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -88,8 +88,7 @@
 
             <TextView
                 android:id="@+id/tv_timer"
-                android:text="00:30"
-                android:visibility="gone"
+                android:text="00:00"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -101,6 +100,15 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_total_question"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_grid_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                tools:listitem="@layout/item_grid_question"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_question"
+                app:layout_constraintStart_toStartOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,7 +2,6 @@ package com.example.quizapp.main.category
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.quizapp.R
 import com.example.quizapp.base.BaseActivity

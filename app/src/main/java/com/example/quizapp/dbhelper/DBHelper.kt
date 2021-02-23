@@ -51,7 +51,7 @@ class DBHelper(context: Context) : SQLiteAssetHelper(context, DB_NAME, null, DB_
         getInstance(context)
         val db = instance!!.writableDatabase
 
-        val cursor: Cursor = db.rawQuery("SELECT * FROM Question WHERE categoryId=$categoryId ORDER BY RANDOM();", null)
+        val cursor: Cursor = db.rawQuery("SELECT * FROM Question WHERE categoryId=$categoryId;", null)
 
         val questions: MutableList<Question> = ArrayList()
 

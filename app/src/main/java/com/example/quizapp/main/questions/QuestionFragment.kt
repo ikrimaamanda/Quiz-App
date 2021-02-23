@@ -3,7 +3,7 @@ package com.example.quizapp.main.questions
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +50,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
                         })
             } else {
+                binding.progressBar.visibility = View.GONE
                 binding.ivQuestion.visibility = View.GONE
             }
 
@@ -98,6 +99,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
     override fun selectedAnswer(): CurrentQuestion {
         Common.selectedValue.distinct()
+        Common.selectedValue.sort()
 
         if (Common.answerSheetList[questionIndex].type == Common.ANSWER_TYPE.NO_ANSWER) {
             val currentQuestion = CurrentQuestion(questionIndex, Common.ANSWER_TYPE.NO_ANSWER)
@@ -118,6 +120,8 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
             if (question != null) {
                 if (result.isNotEmpty()) {
+                    Log.d("result:", result.toString())
+                    Log.d("correctAnswer:", question!!.correctAnswer.toString())
                     if(result.toString() == question!!.correctAnswer) {
                         currentQuestion.type = Common.ANSWER_TYPE.RIGHT_ANSWER
                     } else {
@@ -133,6 +137,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
 
             Common.selectedValue.clear()
             return currentQuestion
+
         } else {
             return Common.answerSheetList[questionIndex]
         }
@@ -161,7 +166,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
         binding.ckbAnswerA.isEnabled = false
         binding.ckbAnswerB.isEnabled = false
         binding.ckbAnswerC.isEnabled = false
-        binding.ckbAnswerD.isEnabled = true
+        binding.ckbAnswerD.isEnabled = false
 
     }
 
