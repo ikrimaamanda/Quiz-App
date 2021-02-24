@@ -57,7 +57,6 @@ class AchievementAdapter(private var questionList: List<QuestionRecyclerView>) :
         holder.binding.ckbAnswerD.text = items.answerD
 
         val isExpandable : Boolean = questionList[position].expandable
-        holder.binding.expandableLayout.visibility = if (isExpandable) View.VISIBLE else View.GONE
 
         if (isExpandable) {
             holder.binding.expandableLayout.visibility = View.VISIBLE
