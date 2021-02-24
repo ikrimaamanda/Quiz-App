@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
@@ -30,7 +29,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
     private var countDownTimer : CountDownTimer? = null
     var timePlayQuiz = Common.TOTAL_TIME
     lateinit var answerAdapter : AnswerAdapter
-    var isAnswerModeView = false
+    private var isAnswerModeView = false
 
     private val CODE_GET_RESULT = 7777
 
@@ -87,14 +86,18 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                     val questionFragment : QuestionFragment
                     var position = 0
                     if (p0 > 0) {
-                        if (isScrollingDirectionRight) {
-                            questionFragment = Common.fragmentList[p0-1]
-                            position = p0-1
-                        } else if (isScrollingDirectionLeft) {
-                            questionFragment = Common.fragmentList[p0+1]
-                            position = p0+1
-                        } else {
-                            questionFragment = Common.fragmentList[p0]
+                        when {
+                            isScrollingDirectionRight -> {
+                                questionFragment = Common.fragmentList[p0-1]
+                                position = p0-1
+                            }
+                            isScrollingDirectionLeft -> {
+                                questionFragment = Common.fragmentList[p0+1]
+                                position = p0+1
+                            }
+                            else -> {
+                                questionFragment = Common.fragmentList[p0]
+                            }
                         }
                     } else {
                         questionFragment = Common.fragmentList[0]
@@ -111,10 +114,9 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                         binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
                         binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
                         binding.tvTrue.text = "True ${Common.rightAnswerCount}"
-                        binding.tvFalse.text = "Wrong ${Common.wrongAnswerCount}"
+                        binding.tvFalse.text = "False ${Common.wrongAnswerCount}"
 
                         if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
-                            questionFragment.showCorrectAnswer()
                             questionFragment.disableAnswer()
                         }
                     }
@@ -136,63 +138,16 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
     }
 
     override fun onBackPressed() {
-        this.finish()
-        super.onBackPressed()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CODE_GET_RESULT) {
-            if (resultCode == Activity.RESULT_OK) {
-                val action = data?.getStringExtra("action")
-
-                if (action == null || TextUtils.isEmpty(action)) {
-                    val questionIndex = data?.getIntExtra(Common.KEY_BACK_FROM_ACHIEVEMENT, -1)
-                    binding.viewPager.currentItem = questionIndex!!
-                    isAnswerModeView = true
-                    countDownTimer!!.cancel()
-
-                    binding.tvFalse.visibility = View.GONE
-                    binding.tvTrue.visibility = View.GONE
-                    binding.tvTimer.visibility = View.GONE
-
-                    for (i in Common.fragmentList.indices) {
-                        Common.fragmentList[i].showCorrectAnswer()
-                        Common.fragmentList[i].disableAnswer()
-                    }
-                } else {
-                    if (action == "viewAnswer") {
-                        binding.viewPager.currentItem = 0
-                        isAnswerModeView = true
-                        countDownTimer!!.cancel()
-
-                        binding.tvFalse.visibility = View.GONE
-                        binding.tvTrue.visibility = View.GONE
-                        binding.tvTimer.visibility = View.GONE
-
-                        for (i in Common.fragmentList.indices) {
-                            Common.fragmentList[i].showCorrectAnswer()
-                            Common.fragmentList[i].disableAnswer()
-
-                        }
-                    } else if (action == "doQuizAgain") {
-                        binding.viewPager.currentItem = 0
-                        isAnswerModeView = true
-
-                        binding.tvFalse.visibility = View.VISIBLE
-                        binding.tvTrue.visibility = View.VISIBLE
-                        binding.tvTimer.visibility = View.VISIBLE
-
-                        for (i in Common.fragmentList.indices) {
-                            Common.fragmentList[i].resetQuestion()
-                        }
-
-                        countTimer()
-
-                    }
-                }
+        AwesomeDialog.build(this)
+            .title("Back to Category")
+            .body("Are you sure to cancel answer this quiz?")
+            .position(AwesomeDialog.POSITIONS.CENTER)
+            .onPositive("Yes") {
+                this.finish()
+                super.onBackPressed()
             }
-        }
+            .onNegative("No") {
+            }
     }
 
     private fun setTabAndViewPager() {
@@ -276,23 +231,17 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
 
         countCorrectAnswer()
 
-        binding.tvTotalQuestion.text = ("Question\n${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
-        binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
-        binding.tvTrue.text = "True ${Common.rightAnswerCount}"
-        binding.tvFalse.text = "Wrong ${Common.wrongAnswerCount}"
-
         if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
             questionFragment.showCorrectAnswer()
             questionFragment.disableAnswer()
         }
 
         Common.timer = Common.TOTAL_TIME - timePlayQuiz
-        Common.noAnswerCount = Common.questionList.size - (Common.rightAnswerCount + Common.wrongAnswerCount)
+        Common.noAnswerCount = Common.questionList.size - Common.rightAnswerCount
         Common.dataQuestion = StringBuilder(Gson().toJson(Common.answerSheetList))
 
         val intent = Intent(this, AchievementActivity::class.java)
         startActivityForResult(intent, CODE_GET_RESULT)
-        finish()
     }
 
     private fun checkQuestions() {
@@ -305,7 +254,6 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                     .position(AwesomeDialog.POSITIONS.CENTER)
                     .icon(R.drawable.ic_sad)
                     .onPositive("Go To Category of Questions") {
-                        Log.d("TAG", "positive ")
                         intent<CategoryQuestionActivity>(this)
                         finish()
                     }
@@ -320,16 +268,70 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                     .body("Are you sure to finish this quiz?")
                     .position(AwesomeDialog.POSITIONS.CENTER)
                     .onPositive("Yes") {
-                        Log.d("TAG", "positive ")
                         finishQuiz()
                     }
                     .onNegative("No") {
-                        Log.d("TAG", "negative ")
                     }
             } else {
                 finishQuiz()
             }
 
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CODE_GET_RESULT) {
+            if (resultCode == Activity.RESULT_OK) {
+                val action = data!!.getStringExtra("action")
+
+                if (action == null || TextUtils.isEmpty(action)) {
+                    val questionIndex = data.getIntExtra(Common.KEY_BACK_FROM_ACHIEVEMENT, -1)
+                    binding.viewPager.currentItem = questionIndex
+                    isAnswerModeView = true
+                    countDownTimer!!.cancel()
+
+                    binding.tvFalse.visibility = View.GONE
+                    binding.tvTrue.visibility = View.GONE
+                    binding.tvTimer.visibility = View.GONE
+
+                    for (i in Common.fragmentList.indices) {
+                        Common.fragmentList[i].showCorrectAnswer()
+                        Common.fragmentList[i].disableAnswer()
+                    }
+                } else {
+                    if (action == "viewanswer") {
+                        binding.viewPager.currentItem = 0
+                        isAnswerModeView = true
+                        countDownTimer!!.cancel()
+
+                        binding.tvScore.text = data.getStringExtra("score")
+
+                        binding.tvFalse.visibility = View.GONE
+                        binding.tvTrue.visibility = View.GONE
+                        binding.tvTimer.visibility = View.GONE
+
+                        for (i in Common.fragmentList.indices) {
+                            Common.fragmentList[i].showCorrectAnswer()
+                            Common.fragmentList[i].disableAnswer()
+                        }
+                    } else if (action == "doquizagain") {
+                        binding.viewPager.currentItem = 0
+                        isAnswerModeView = true
+
+                        binding.tvFalse.visibility = View.VISIBLE
+                        binding.tvTrue.visibility = View.VISIBLE
+                        binding.tvTimer.visibility = View.VISIBLE
+
+                        for (i in Common.fragmentList.indices) {
+                            Common.fragmentList[i].resetQuestion()
+                        }
+
+                        countTimer()
+
+                    }
+                }
+            }
         }
     }
 
