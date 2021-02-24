@@ -5,8 +5,8 @@ import android.os.Bundle
 import com.example.quizapp.R
 import com.example.quizapp.base.BaseActivity
 import com.example.quizapp.databinding.ActivityWelcomePageBinding
+import com.example.quizapp.main.achievement.AchievementActivity
 import com.example.quizapp.main.category.CategoryQuestionActivity
-import com.example.quizapp.main.questions.MainContentQuestionActivity
 
 class WelcomePageActivity : BaseActivity<ActivityWelcomePageBinding>() {
 

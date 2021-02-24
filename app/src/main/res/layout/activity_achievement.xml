@@ -5,15 +5,13 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".main.questions.MainContentQuestionActivity">
+        tools:context=".main.achievement.AchievementActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:paddingHorizontal="20dp"
+            android:padding="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +19,7 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:text="Soal X"
+                android:text="Achievement"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_bold"
                 android:textSize="22sp"
@@ -31,18 +29,27 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
+                android:id="@+id/tv_desc"
+                android:text="This is detail achievement of Music's Category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
                 android:id="@+id/tv_total_question"
-                android:text="Question 0/X"
+                android:text="Question \n0/X"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_dark_grey"
+                android:background="@color/dark_grey"
                 android:padding="5dp"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                app:layout_constraintStart_toStartOf="@id/tv_title"
-                />
+                app:layout_constraintTop_toBottomOf="@id/tv_desc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_score"/>
 
             <TextView
                 android:id="@+id/tv_score"
@@ -51,7 +58,7 @@
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_dark_grey"
+                android:background="@color/dark_grey"
                 android:padding="5dp"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintTop_toTopOf="@id/tv_total_question"
@@ -67,7 +74,7 @@
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_dark_grey"
+                android:background="@color/dark_grey"
                 android:padding="5dp"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintTop_toTopOf="@id/tv_total_question"
@@ -83,7 +90,7 @@
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_dark_grey"
+                android:background="@color/dark_grey"
                 android:padding="5dp"
                 android:layout_marginLeft="10dp"
                 app:layout_constraintTop_toTopOf="@id/tv_true"
@@ -91,71 +98,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
-            <TextView
-                android:id="@+id/tv_timer"
-                android:text="00:00"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_bg_dark_grey"
-                android:padding="5dp"
-                app:layout_constraintTop_toTopOf="@id/rv_grid_answer"
-                app:layout_constraintBottom_toBottomOf="@id/rv_grid_answer"
-                app:layout_constraintEnd_toEndOf="@id/tv_false"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_grid_answer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                tools:listitem="@layout/item_grid_question"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_question"
-                app:layout_constraintStart_toStartOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/top_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            >
+            android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabTextColor="@color/white"
-                app:tabIndicatorColor="@color/white"
-                app:tabBackground="@color/baby_blue"
-                app:tabIndicatorHeight="5dp"
-                app:tabMode="scrollable"
-                />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                />
 
         </LinearLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_finish"
-            app:backgroundTint="@color/baby_blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

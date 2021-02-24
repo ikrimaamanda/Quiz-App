@@ -21,7 +21,7 @@ class AnswerAdapter(var context: Context, private var answerSheetList : List<Cur
                     binding.viewQuestionItem.setBackgroundResource(R.drawable.shape_question_answered)
                 }
                 Common.ANSWER_TYPE.WRONG_ANSWER -> {
-                    binding.viewQuestionItem.setBackgroundResource(R.drawable.shape_question_wrong_answer)
+                    binding.viewQuestionItem.setBackgroundResource(R.drawable.shape_question_answered)
                 }
                 else -> {
                     binding.viewQuestionItem.setBackgroundResource(R.drawable.shape_question_no_answer)

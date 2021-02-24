@@ -1,6 +1,7 @@
 package com.example.quizapp.main.questions
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -15,8 +16,11 @@ import com.example.quizapp.base.BaseActivity
 import com.example.quizapp.common.Common
 import com.example.quizapp.databinding.ActivityMainContentQuestionBinding
 import com.example.quizapp.dbhelper.DBHelper
+import com.example.quizapp.main.achievement.AchievementActivity
 import com.example.quizapp.main.category.CategoryQuestionActivity
 import com.example.quizapp.model.CurrentQuestion
+import com.google.gson.Gson
+import java.lang.StringBuilder
 import java.util.concurrent.TimeUnit
 
 class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBinding>() {
@@ -25,6 +29,8 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
     var timePlayQuiz = Common.TOTAL_TIME
     lateinit var answerAdapter : AnswerAdapter
     var isAnswerModeView = false
+
+    val CODE_GET_RESULT = 7777
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content_question
@@ -100,7 +106,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
 
                         countCorrectAnswer()
 
-                        binding.tvTotalQuestion.text = ("Question\n${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
+                        binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
                         binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
                         binding.tvTrue.text = "True ${Common.rightAnswerCount}"
                         binding.tvFalse.text = "Wrong ${Common.wrongAnswerCount}"
@@ -120,11 +126,16 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
 
             })
 
-            binding.tvTotalQuestion.text = ("Question\n${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
+            binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
             binding.tvTrue.text = "True ${Common.rightAnswerCount}"
         }
 
         clickListener()
+    }
+
+    override fun onBackPressed() {
+        this.finish()
+        super.onBackPressed()
     }
 
     private fun setTabAndViewPager() {
@@ -220,6 +231,14 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
             questionFragment.showCorrectAnswer()
             questionFragment.disableAnswer()
         }
+
+        Common.timer = Common.TOTAL_TIME - timePlayQuiz
+        Common.noAnswerCount = Common.questionList.size - (Common.rightAnswerCount + Common.wrongAnswerCount)
+        Common.dataQuestion = StringBuilder(Gson().toJson(Common.answerSheetList))
+
+        val intent = Intent(this, AchievementActivity::class.java)
+        startActivityForResult(intent, CODE_GET_RESULT)
+        finish()
     }
 
     private fun checkQuestions() {
@@ -246,7 +265,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                         .title("FINISH QUIZ")
                         .body("Are you sure to finish this quiz?")
                         .position(AwesomeDialog.POSITIONS.CENTER)
-                        .onPositive("Go to Category") {
+                        .onPositive("Yes") {
                             Log.d("TAG", "positive ")
                             finishQuiz()
 //                            intent<CategoryQuestionActivity>(this)
