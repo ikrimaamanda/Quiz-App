@@ -171,9 +171,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         Common.rightAnswerCount = 0
         Common.wrongAnswerCount = 0
 
-        Log.d("answer:", Common.answerSheetList.toString())
         for (item : CurrentQuestion in Common.answerSheetList) {
-            Log.d("itemType:", item.type.toString())
             if (item.type == Common.ANSWER_TYPE.RIGHT_ANSWER) {
                 Common.rightAnswerCount++
             } else if (item.type == Common.ANSWER_TYPE.WRONG_ANSWER) {
@@ -267,8 +265,8 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                         .position(AwesomeDialog.POSITIONS.CENTER)
                         .onPositive("Yes") {
                             Log.d("TAG", "positive ")
-                            finishQuiz()
-//                            intent<CategoryQuestionActivity>(this)
+//                            finishQuiz()
+                            intent<AchievementActivity>(this)
 //                            finish()
                         }
                         .onNegative("No") {

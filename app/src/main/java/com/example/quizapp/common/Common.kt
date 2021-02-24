@@ -4,6 +4,7 @@ import com.example.quizapp.main.questions.QuestionFragment
 import com.example.quizapp.model.Category
 import com.example.quizapp.model.CurrentQuestion
 import com.example.quizapp.model.Question
+import com.example.quizapp.model.QuestionRecyclerView
 
 object Common {
 
@@ -20,6 +21,8 @@ object Common {
     var wrongAnswerCount = 0
     var noAnswerCount = 0
     var dataQuestion = StringBuilder()
+
+    var questionAchievementList : MutableList<QuestionRecyclerView> = ArrayList()
 
     enum class ANSWER_TYPE {
         NO_ANSWER,
