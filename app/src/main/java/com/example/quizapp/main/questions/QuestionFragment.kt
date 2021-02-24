@@ -133,6 +133,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
                 currentQuestion.type = Common.ANSWER_TYPE.NO_ANSWER
             }
 
+            Common.selectedValueSave.addAll(Common.selectedValue)
             Common.selectedValue.clear()
             return currentQuestion
 

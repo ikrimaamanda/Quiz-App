@@ -30,7 +30,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
     lateinit var answerAdapter : AnswerAdapter
     var isAnswerModeView = false
 
-    val CODE_GET_RESULT = 7777
+    private val CODE_GET_RESULT = 7777
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setLayout = R.layout.activity_main_content_question
