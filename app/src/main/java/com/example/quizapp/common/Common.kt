@@ -15,7 +15,6 @@ object Common {
 
     var fragmentList : MutableList<QuestionFragment> = ArrayList()
     var selectedValue : MutableList<String> = ArrayList()
-    var selectedValueSave : MutableList<String> = ArrayList()
 
     var timer = 0
     var rightAnswerCount = 0
