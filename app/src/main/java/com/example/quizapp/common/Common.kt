@@ -8,7 +8,7 @@ import com.example.quizapp.model.QuestionRecyclerView
 
 object Common {
 
-    const val TOTAL_TIME = 5*60*1000
+    const val TOTAL_TIME = 1*60*1000
     var answerSheetList : MutableList<CurrentQuestion> = ArrayList()
     var questionList : MutableList<Question> = ArrayList()
     var selectedCategory : Category? = null
@@ -23,6 +23,8 @@ object Common {
     var dataQuestion = StringBuilder()
 
     var questionAchievementList : MutableList<QuestionRecyclerView> = ArrayList()
+
+    val KEY_BACK_FROM_ACHIEVEMENT : String = "back_from_achievement"
 
     enum class ANSWER_TYPE {
         NO_ANSWER,

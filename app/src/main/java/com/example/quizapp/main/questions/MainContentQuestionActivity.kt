@@ -1,9 +1,11 @@
 package com.example.quizapp.main.questions
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -138,6 +140,61 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         super.onBackPressed()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CODE_GET_RESULT) {
+            if (resultCode == Activity.RESULT_OK) {
+                val action = data?.getStringExtra("action")
+
+                if (action == null || TextUtils.isEmpty(action)) {
+                    val questionIndex = data?.getIntExtra(Common.KEY_BACK_FROM_ACHIEVEMENT, -1)
+                    binding.viewPager.currentItem = questionIndex!!
+                    isAnswerModeView = true
+                    countDownTimer!!.cancel()
+
+                    binding.tvFalse.visibility = View.GONE
+                    binding.tvTrue.visibility = View.GONE
+                    binding.tvTimer.visibility = View.GONE
+
+                    for (i in Common.fragmentList.indices) {
+                        Common.fragmentList[i].showCorrectAnswer()
+                        Common.fragmentList[i].disableAnswer()
+                    }
+                } else {
+                    if (action == "viewAnswer") {
+                        binding.viewPager.currentItem = 0
+                        isAnswerModeView = true
+                        countDownTimer!!.cancel()
+
+                        binding.tvFalse.visibility = View.GONE
+                        binding.tvTrue.visibility = View.GONE
+                        binding.tvTimer.visibility = View.GONE
+
+                        for (i in Common.fragmentList.indices) {
+                            Common.fragmentList[i].showCorrectAnswer()
+                            Common.fragmentList[i].disableAnswer()
+
+                        }
+                    } else if (action == "doQuizAgain") {
+                        binding.viewPager.currentItem = 0
+                        isAnswerModeView = true
+
+                        binding.tvFalse.visibility = View.VISIBLE
+                        binding.tvTrue.visibility = View.VISIBLE
+                        binding.tvTimer.visibility = View.VISIBLE
+
+                        for (i in Common.fragmentList.indices) {
+                            Common.fragmentList[i].resetQuestion()
+                        }
+
+                        countTimer()
+
+                    }
+                }
+            }
+        }
+    }
+
     private fun setTabAndViewPager() {
         val fragmentAdapter = MainContentQuestionAdapter(supportFragmentManager, Common.fragmentList)
         binding.viewPager.offscreenPageLimit = Common.questionList.size
@@ -206,7 +263,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
                 finishQuiz()
             }
 
-        }
+        }.start()
     }
 
     fun finishQuiz() {
@@ -220,8 +277,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         countCorrectAnswer()
 
         binding.tvTotalQuestion.text = ("Question\n${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
-        val score = Common.rightAnswerCount * (100/Common.questionList.size)
-        binding.tvScore.text = "Score ${(100 - score) + score}"
+        binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
         binding.tvTrue.text = "True ${Common.rightAnswerCount}"
         binding.tvFalse.text = "Wrong ${Common.wrongAnswerCount}"
 
@@ -260,18 +316,16 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         binding.btnFinish.setOnClickListener {
             if (!isAnswerModeView) {
                 AwesomeDialog.build(this)
-                        .title("FINISH QUIZ")
-                        .body("Are you sure to finish this quiz?")
-                        .position(AwesomeDialog.POSITIONS.CENTER)
-                        .onPositive("Yes") {
-                            Log.d("TAG", "positive ")
-//                            finishQuiz()
-                            intent<AchievementActivity>(this)
-//                            finish()
-                        }
-                        .onNegative("No") {
-                            Log.d("TAG", "negative ")
-                        }
+                    .title("FINISH QUIZ")
+                    .body("Are you sure to finish this quiz?")
+                    .position(AwesomeDialog.POSITIONS.CENTER)
+                    .onPositive("Yes") {
+                        Log.d("TAG", "positive ")
+                        finishQuiz()
+                    }
+                    .onNegative("No") {
+                        Log.d("TAG", "negative ")
+                    }
             } else {
                 finishQuiz()
             }

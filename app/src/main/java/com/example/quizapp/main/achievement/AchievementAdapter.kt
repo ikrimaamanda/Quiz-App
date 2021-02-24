@@ -89,6 +89,10 @@ class AchievementAdapter(private var questionList: List<QuestionRecyclerView>) :
                 }
             }
 
+//            if (Common.answerSheetList[position].type == Common.ANSWER_TYPE.NO_ANSWER) {
+//
+//            }
+
             holder.binding.ckbAnswerA.isEnabled = false
             holder.binding.ckbAnswerB.isEnabled = false
             holder.binding.ckbAnswerC.isEnabled = false
