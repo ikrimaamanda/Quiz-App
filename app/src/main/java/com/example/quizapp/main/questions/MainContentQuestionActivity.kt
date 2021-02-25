@@ -20,8 +20,6 @@ import com.example.quizapp.dbhelper.DBHelper
 import com.example.quizapp.main.achievement.AchievementActivity
 import com.example.quizapp.main.category.CategoryQuestionActivity
 import com.example.quizapp.model.CurrentQuestion
-import com.google.gson.Gson
-import java.lang.StringBuilder
 import java.util.concurrent.TimeUnit
 
 class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBinding>() {

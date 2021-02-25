@@ -36,24 +36,8 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
         question = Common.questionList[questionIndex]
 
         if (question != null) {
-            if (question!!.isImageQuestion) {
-                Picasso.get()
-                        .load(question!!.questionImage)
-                        .into(binding.ivQuestion, object : Callback {
-                            override fun onSuccess() {
-                                binding.progressBar.visibility = View.GONE
-                            }
 
-                            override fun onError(e: Exception?) {
-                                binding.progressBar.visibility = View.GONE
-                                binding.ivQuestion.setImageResource(R.drawable.ic_error)
-                            }
-
-                        })
-            } else {
-                binding.progressBar.visibility = View.GONE
-                binding.ivQuestion.visibility = View.GONE
-            }
+            checkImage()
 
             binding.tvQuestion.text = question!!.questionText
             binding.ckbAnswerA.text = question!!.answerA
@@ -61,41 +45,66 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
             binding.ckbAnswerC.text = question!!.answerC
             binding.ckbAnswerD.text = question!!.answerD
 
-            binding.ckbAnswerA.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerA.text.toString())
-                } else {
-                    Common.selectedValue.remove(binding.ckbAnswerA.text.toString())
-                }
-            }
-
-            binding.ckbAnswerB.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerB.text.toString())
-                } else {
-                    Common.selectedValue.remove(binding.ckbAnswerB.text.toString())
-                }
-            }
-
-            binding.ckbAnswerC.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerC.text.toString())
-                } else {
-                    Common.selectedValue.remove(binding.ckbAnswerC.text.toString())
-                }
-            }
-
-            binding.ckbAnswerD.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    Common.selectedValue.add(binding.ckbAnswerD.text.toString())
-                } else {
-                    Common.selectedValue.remove(binding.ckbAnswerD.text.toString())
-                }
-            }
+            setCheckBox()
 
         }
 
         return binding.root
+    }
+
+    private fun checkImage() {
+        if (question!!.isImageQuestion) {
+            Picasso.get()
+                    .load(question!!.questionImage)
+                    .into(binding.ivQuestion, object : Callback {
+                        override fun onSuccess() {
+                            binding.progressBar.visibility = View.GONE
+                        }
+
+                        override fun onError(e: Exception?) {
+                            binding.progressBar.visibility = View.GONE
+                            binding.ivQuestion.setImageResource(R.drawable.ic_error)
+                        }
+
+                    })
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.ivQuestion.visibility = View.GONE
+        }
+    }
+
+    private fun setCheckBox() {
+        binding.ckbAnswerA.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Common.selectedValue.add(binding.ckbAnswerA.text.toString())
+            } else {
+                Common.selectedValue.remove(binding.ckbAnswerA.text.toString())
+            }
+        }
+
+        binding.ckbAnswerB.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Common.selectedValue.add(binding.ckbAnswerB.text.toString())
+            } else {
+                Common.selectedValue.remove(binding.ckbAnswerB.text.toString())
+            }
+        }
+
+        binding.ckbAnswerC.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Common.selectedValue.add(binding.ckbAnswerC.text.toString())
+            } else {
+                Common.selectedValue.remove(binding.ckbAnswerC.text.toString())
+            }
+        }
+
+        binding.ckbAnswerD.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Common.selectedValue.add(binding.ckbAnswerD.text.toString())
+            } else {
+                Common.selectedValue.remove(binding.ckbAnswerD.text.toString())
+            }
+        }
     }
 
     override fun selectedAnswer(): CurrentQuestion {

@@ -15,7 +15,6 @@
         <activity android:name=".main.questions.MainContentQuestionActivity" />
         <activity android:name=".main.category.CategoryQuestionActivity" />
         <activity android:name=".welcomepage.WelcomePageActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
