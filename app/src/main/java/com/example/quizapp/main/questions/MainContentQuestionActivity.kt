@@ -51,90 +51,94 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
             generateFragmentList()
             setTabAndViewPager()
 
-            binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
-                val SCROLLING_RIGHT = 0
-                val SCROLLING_LEFT = 1
-                val SCROLLING_UNDETERMINED = 2
-
-                var currentScrollDirection = SCROLLING_UNDETERMINED
-
-                private val isScrollingDirectionUndetermined :Boolean
-                get() = currentScrollDirection == SCROLLING_UNDETERMINED
-
-                private val isScrollingDirectionRight :Boolean
-                get() = currentScrollDirection == SCROLLING_RIGHT
-
-                private val isScrollingDirectionLeft :Boolean
-                get() = currentScrollDirection == SCROLLING_LEFT
-
-                private fun setScrollingDirection(positionOffSet : Float) {
-                    if(1 - positionOffSet >= 0.5) {
-                        this.currentScrollDirection = SCROLLING_RIGHT
-                    } else if(1 - positionOffSet <= 0.5) {
-                        this.currentScrollDirection = SCROLLING_LEFT
-                    }
-                }
-
-                override fun onPageScrolled(position: Int, p1: Float, positionOffsetPixels: Int) {
-                    if (isScrollingDirectionUndetermined) {
-                        setScrollingDirection(p1)
-                    }
-                }
-
-                override fun onPageSelected(p0: Int) {
-                    val questionFragment : QuestionFragment
-                    var position = 0
-                    if (p0 > 0) {
-                        when {
-                            isScrollingDirectionRight -> {
-                                questionFragment = Common.fragmentList[p0-1]
-                                position = p0-1
-                            }
-                            isScrollingDirectionLeft -> {
-                                questionFragment = Common.fragmentList[p0+1]
-                                position = p0+1
-                            }
-                            else -> {
-                                questionFragment = Common.fragmentList[p0]
-                            }
-                        }
-                    } else {
-                        questionFragment = Common.fragmentList[0]
-                        position = 0
-                    }
-
-                    if (Common.answerSheetList[position].type == Common.ANSWER_TYPE.NO_ANSWER) {
-                        val questionState = questionFragment.selectedAnswer()
-                        Common.answerSheetList[position] = questionState
-                        answerAdapter.notifyDataSetChanged()
-
-                        countCorrectAnswer()
-
-                        binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
-                        binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
-                        binding.tvTrue.text = "True ${Common.rightAnswerCount}"
-                        binding.tvFalse.text = "False ${Common.wrongAnswerCount}"
-
-                        if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
-                            questionFragment.disableAnswer()
-                        }
-                    }
-                }
-
-                override fun onPageScrollStateChanged(state: Int) {
-                    if (state == ViewPager.SCROLL_STATE_IDLE) {
-                        this.currentScrollDirection = SCROLLING_UNDETERMINED
-                    }
-                }
-
-            })
+            setUpViewPager()
 
             binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
-            binding.tvTrue.text = "True ${Common.rightAnswerCount}"
         }
 
         clickListener()
+    }
+
+    private fun setUpViewPager() {
+        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            val SCROLLING_RIGHT = 0
+            val SCROLLING_LEFT = 1
+            val SCROLLING_UNDETERMINED = 2
+
+            var currentScrollDirection = SCROLLING_UNDETERMINED
+
+            private val isScrollingDirectionUndetermined :Boolean
+                get() = currentScrollDirection == SCROLLING_UNDETERMINED
+
+            private val isScrollingDirectionRight :Boolean
+                get() = currentScrollDirection == SCROLLING_RIGHT
+
+            private val isScrollingDirectionLeft :Boolean
+                get() = currentScrollDirection == SCROLLING_LEFT
+
+            private fun setScrollingDirection(positionOffSet : Float) {
+                if(1 - positionOffSet >= 0.5) {
+                    this.currentScrollDirection = SCROLLING_RIGHT
+                } else if(1 - positionOffSet <= 0.5) {
+                    this.currentScrollDirection = SCROLLING_LEFT
+                }
+            }
+
+            override fun onPageScrolled(position: Int, p1: Float, positionOffsetPixels: Int) {
+                if (isScrollingDirectionUndetermined) {
+                    setScrollingDirection(p1)
+                }
+            }
+
+            override fun onPageSelected(p0: Int) {
+                val questionFragment : QuestionFragment
+                var position = 0
+                if (p0 > 0) {
+                    when {
+                        isScrollingDirectionRight -> {
+                            questionFragment = Common.fragmentList[p0-1]
+                            position = p0-1
+                        }
+                        isScrollingDirectionLeft -> {
+                            questionFragment = Common.fragmentList[p0+1]
+                            position = p0+1
+                        }
+                        else -> {
+                            questionFragment = Common.fragmentList[p0]
+                        }
+                    }
+                } else {
+                    questionFragment = Common.fragmentList[0]
+                    position = 0
+                }
+
+                if (Common.answerSheetList[position].type == Common.ANSWER_TYPE.NO_ANSWER) {
+                    val questionState = questionFragment.selectedAnswer()
+                    Common.answerSheetList[position] = questionState
+                    answerAdapter.notifyDataSetChanged()
+
+                    countCorrectAnswer()
+
+                    binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
+                    binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
+                    binding.tvTrue.text = "True ${Common.rightAnswerCount}"
+                    binding.tvFalse.text = "False ${Common.wrongAnswerCount}"
+
+                    if (questionState.type != Common.ANSWER_TYPE.NO_ANSWER) {
+                        questionFragment.disableAnswer()
+                    }
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    this.currentScrollDirection = SCROLLING_UNDETERMINED
+                }
+            }
+
+        })
+
     }
 
     override fun onBackPressed() {
@@ -238,7 +242,9 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
 
         Common.timer = Common.TOTAL_TIME - timePlayQuiz
         Common.noAnswerCount = Common.questionList.size - Common.rightAnswerCount
-        Common.dataQuestion = StringBuilder(Gson().toJson(Common.answerSheetList))
+
+        binding.tvTotalQuestion.text = ("Question ${Common.rightAnswerCount + Common.wrongAnswerCount}/${Common.questionList.size}")
+        binding.tvScore.text = "Score ${Common.rightAnswerCount * (100/Common.questionList.size)}"
 
         val intent = Intent(this, AchievementActivity::class.java)
         startActivityForResult(intent, CODE_GET_RESULT)

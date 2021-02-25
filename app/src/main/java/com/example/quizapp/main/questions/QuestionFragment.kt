@@ -145,18 +145,23 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
     override fun showCorrectAnswer() {
         val correctAnswer = question!!.correctAnswer!!.split(",".toRegex()).dropLastWhile { it.isEmpty() }
         for (answer in correctAnswer) {
-            if (answer.equals("A", true)) {
-                binding.ckbAnswerA.setTypeface(null, Typeface.BOLD)
-                binding.ckbAnswerA.setTextColor(Color.BLACK)
-            } else if (answer.equals("B", true)) {
-                binding.ckbAnswerB.setTypeface(null, Typeface.BOLD)
-                binding.ckbAnswerB.setTextColor(Color.BLACK)
-            } else if (answer.equals("C", true)) {
-                binding.ckbAnswerC.setTypeface(null, Typeface.BOLD)
-                binding.ckbAnswerC.setTextColor(Color.BLACK)
-            } else if (answer.equals("D", true)) {
-                binding.ckbAnswerD.setTypeface(null, Typeface.BOLD)
-                binding.ckbAnswerD.setTextColor(Color.BLACK)
+            when {
+                answer.equals("A", true) -> {
+                    binding.ckbAnswerA.setTypeface(null, Typeface.BOLD)
+                    binding.ckbAnswerA.setTextColor(Color.BLACK)
+                }
+                answer.equals("B", true) -> {
+                    binding.ckbAnswerB.setTypeface(null, Typeface.BOLD)
+                    binding.ckbAnswerB.setTextColor(Color.BLACK)
+                }
+                answer.equals("C", true) -> {
+                    binding.ckbAnswerC.setTypeface(null, Typeface.BOLD)
+                    binding.ckbAnswerC.setTextColor(Color.BLACK)
+                }
+                answer.equals("D", true) -> {
+                    binding.ckbAnswerD.setTypeface(null, Typeface.BOLD)
+                    binding.ckbAnswerD.setTextColor(Color.BLACK)
+                }
             }
         }
     }
