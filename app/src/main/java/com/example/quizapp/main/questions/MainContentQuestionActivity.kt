@@ -140,7 +140,7 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
     override fun onBackPressed() {
         AwesomeDialog.build(this)
             .title("Back to Category")
-            .body("Are you sure to cancel answer this quiz?")
+            .body("Are you sure to go back to Category?")
             .position(AwesomeDialog.POSITIONS.CENTER)
             .onPositive("Yes") {
                 this.finish()

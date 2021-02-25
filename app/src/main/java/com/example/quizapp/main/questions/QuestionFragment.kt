@@ -45,6 +45,7 @@ class QuestionFragment : Fragment(), InterfaceAnswerSelect {
                             }
 
                             override fun onError(e: Exception?) {
+                                binding.progressBar.visibility = View.GONE
                                 binding.ivQuestion.setImageResource(R.drawable.ic_error)
                             }
 
