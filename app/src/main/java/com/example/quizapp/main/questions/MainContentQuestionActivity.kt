@@ -42,6 +42,13 @@ class MainContentQuestionActivity : BaseActivity<ActivityMainContentQuestionBind
         checkQuestions()
 
         if (Common.questionList.size > 0) {
+
+            if (Common.questionList.size <= 5) {
+                Common.TOTAL_TIME = 1*60*1000
+            } else {
+                Common.TOTAL_TIME = 5*60*1000
+            }
+
             binding.tvTimer.visibility = View.VISIBLE
             countTimer()
 

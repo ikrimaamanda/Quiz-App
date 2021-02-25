@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.example.quizapp.model.QuestionRecyclerView" />
+    </data>
+
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -75,6 +82,7 @@
                     android:id="@+id/iv_question"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:visibility="gone"
                     android:src="@drawable/img_business_man"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

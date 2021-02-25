@@ -11,7 +11,7 @@ class DBHelper(context: Context) : SQLiteAssetHelper(context, DB_NAME, null, DB_
 
     companion object {
         private var instance : DBHelper? = null
-        private const val DB_NAME = "EurekaQuiz2021.db"
+        private const val DB_NAME = "QuizApps.db"
         private const val DB_VERSION = 1
 
         @Synchronized

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizapp.R
-import com.example.quizapp.common.Common
 import com.example.quizapp.databinding.ItemQuestionOfAchievementBinding
 import com.example.quizapp.model.QuestionRecyclerView
 import com.squareup.picasso.Callback
@@ -17,7 +16,23 @@ import java.lang.Exception
 
 class AchievementAdapter(private var questionList: List<QuestionRecyclerView>) : RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder>(){
 
-    inner class AchievementViewHolder(val binding : ItemQuestionOfAchievementBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class AchievementViewHolder(val binding : ItemQuestionOfAchievementBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(questionModel: QuestionRecyclerView) {
+            binding.model = questionModel
+            Picasso
+                .get()
+                .load(questionModel.questionImage)
+                .into(binding.ivQuestion, object : Callback {
+                    override fun onSuccess() {
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    override fun onError(e: Exception?) {
+                        binding.ivQuestion.setImageResource(R.drawable.ic_error)
+                    }
+                })
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchievementViewHolder {
         return AchievementViewHolder(
@@ -33,25 +48,6 @@ class AchievementAdapter(private var questionList: List<QuestionRecyclerView>) :
     override fun onBindViewHolder(holder: AchievementViewHolder, position: Int) {
         val items = questionList[position]
 
-        if (items.isImageQuestion) {
-            Picasso
-                .get()
-                .load(items.questionImage)
-                .into(holder.binding.ivQuestion, object : Callback {
-                    override fun onSuccess() {
-                        holder.binding.progressBar.visibility = View.GONE
-                    }
-
-                    override fun onError(e: Exception?) {
-                        holder.binding.ivQuestion.setImageResource(R.drawable.ic_error)
-                    }
-
-                })
-        } else {
-            holder.binding.progressBar.visibility = View.GONE
-            holder.binding.ivQuestion.visibility = View.GONE
-        }
-
         holder.binding.tvTitle.text = "Question ${position+1}"
         holder.binding.tvQuestionText.text = items.questionText
         holder.binding.ckbAnswerA.text = items.answerA
@@ -65,6 +61,14 @@ class AchievementAdapter(private var questionList: List<QuestionRecyclerView>) :
             holder.binding.expandableLayout.visibility = View.VISIBLE
             holder.binding.ivArrow.visibility = View.GONE
             holder.binding.ivArrowDown.visibility = View.VISIBLE
+
+            if (!items.isImageQuestion) {
+                holder.binding.progressBar.visibility = View.GONE
+                holder.binding.ivQuestion.visibility = View.GONE
+            } else {
+                holder.bind(questionList[position])
+                holder.binding.ivQuestion.visibility = View.VISIBLE
+            }
 
             val correctAnswers = items.correctAnswer!!.split(",".toRegex()).dropLastWhile { it.isEmpty() }
 
@@ -89,21 +93,15 @@ class AchievementAdapter(private var questionList: List<QuestionRecyclerView>) :
                 }
             }
 
-//            if (Common.answerSheetList[position].type == Common.ANSWER_TYPE.NO_ANSWER) {
-//
-//            }
-
             holder.binding.ckbAnswerA.isEnabled = false
             holder.binding.ckbAnswerB.isEnabled = false
             holder.binding.ckbAnswerC.isEnabled = false
             holder.binding.ckbAnswerD.isEnabled = false
 
-            Common.selectedValue.clear()
-
         } else {
             holder.binding.expandableLayout.visibility = View.GONE
             holder.binding.ivArrowDown.visibility = View.GONE
-
+            holder.binding.ivArrow.visibility = View.VISIBLE
         }
 
         holder.binding.linearLayout.setOnClickListener {
